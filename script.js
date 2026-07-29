@@ -69,40 +69,42 @@ document.querySelectorAll(
   observer.observe(el);
 });
 
-// ─── FORM SUBMIT ───
+// ─── FORM SUBMIT → WHATSAPP ───
 const form = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
 if (form) {
-  form.addEventListener('submit', async (e) => {
-    const action = form.getAttribute('action');
-    // If Formspree ID not yet configured, handle gracefully
-    if (action.includes('[COMPLETAR_ID_FORMSPREE]')) {
-      e.preventDefault();
-      form.style.display = 'none';
-      formSuccess.style.display = 'block';
-      return;
-    }
-
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const data = new FormData(form);
 
-    try {
-      const res = await fetch(action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
+    const nombre     = form.nombre.value.trim();
+    const tipoEvento = form.tipo_evento.options[form.tipo_evento.selectedIndex].text;
+    const fecha      = form.fecha_evento.value;
+    const lugar      = form.lugar_evento.value.trim();
+    const whatsapp   = form.whatsapp.value.trim();
+    const mensaje    = form.mensaje.value.trim();
 
-      if (res.ok) {
-        form.style.display = 'none';
-        formSuccess.style.display = 'block';
-      } else {
-        alert('Hubo un error al enviar. Por favor escribinos por WhatsApp.');
-      }
-    } catch {
-      alert('Hubo un error al enviar. Por favor escribinos por WhatsApp.');
+    const fechaFormateada = fecha
+      ? new Date(fecha + 'T00:00:00').toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      : 'Sin fecha definida';
+
+    let texto =
+      `🎉 *NUEVA CONSULTA - PARTY PRODUCCIONES*\n\n` +
+      `👤 *Nombre:* ${nombre}\n` +
+      `🎊 *Tipo de evento:* ${tipoEvento}\n` +
+      `📅 *Fecha:* ${fechaFormateada}\n` +
+      `📍 *Lugar:* ${lugar || 'No especificado'}\n` +
+      `📱 *WhatsApp:* ${whatsapp}`;
+
+    if (mensaje) {
+      texto += `\n\n💬 *Detalles adicionales:*\n${mensaje}`;
     }
+
+    const url = `https://wa.me/5493512088004?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+
+    form.style.display = 'none';
+    formSuccess.style.display = 'block';
   });
 }
 
