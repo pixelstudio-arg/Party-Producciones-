@@ -82,7 +82,8 @@ if (form) {
     const fecha      = form.fecha_evento.value;
     const lugar      = form.lugar_evento.value.trim();
     const whatsapp   = form.whatsapp.value.trim();
-    const mensaje    = form.mensaje.value.trim();
+    const serviciosSeleccionados = [...form.querySelectorAll('input[name="servicios"]:checked')]
+      .map(cb => cb.value);
 
     const fechaFormateada = fecha
       ? new Date(fecha + 'T00:00:00').toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
@@ -96,8 +97,10 @@ if (form) {
       `📍 *Lugar:* ${lugar || 'No especificado'}\n` +
       `📱 *WhatsApp:* ${whatsapp}`;
 
-    if (mensaje) {
-      texto += `\n\n💬 *Detalles adicionales:*\n${mensaje}`;
+    if (serviciosSeleccionados.length > 0) {
+      texto += `\n\n🎯 *Servicios que le interesan:*\n${serviciosSeleccionados.map(s => `• ${s}`).join('\n')}`;
+    } else {
+      texto += `\n\n🎯 *Servicios:* No especificó (consultar)`;
     }
 
     const url = `https://wa.me/5493512088004?text=${encodeURIComponent(texto)}`;
