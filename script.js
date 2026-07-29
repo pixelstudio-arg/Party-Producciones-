@@ -81,7 +81,6 @@ if (form) {
     const tipoEvento = form.tipo_evento.options[form.tipo_evento.selectedIndex].text;
     const fecha      = form.fecha_evento.value;
     const lugar      = form.lugar_evento.value.trim();
-    const whatsapp   = form.whatsapp.value.trim();
     const serviciosSeleccionados = [...form.querySelectorAll('input[name="servicios"]:checked')]
       .map(cb => cb.value);
 
@@ -94,8 +93,7 @@ if (form) {
       `👤 *Nombre:* ${nombre}\n` +
       `🎊 *Tipo de evento:* ${tipoEvento}\n` +
       `📅 *Fecha:* ${fechaFormateada}\n` +
-      `📍 *Lugar:* ${lugar || 'No especificado'}\n` +
-      `📱 *WhatsApp:* ${whatsapp}`;
+      `📍 *Lugar:* ${lugar || 'No especificado'}`;
 
     if (serviciosSeleccionados.length > 0) {
       texto += `\n\n🎯 *Servicios que le interesan:*\n${serviciosSeleccionados.map(s => `• ${s}`).join('\n')}`;

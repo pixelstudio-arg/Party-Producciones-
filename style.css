@@ -613,6 +613,42 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 20px;
 }
 
+/* ─── BANNER GRATIS ─── */
+.gratis-banner {
+  margin-top: 40px;
+  background: linear-gradient(135deg, rgba(245,158,11,.12), rgba(124,58,237,.1));
+  border: 1px solid rgba(245,158,11,.35);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  text-align: center;
+}
+.gratis-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-gold-l);
+  margin-bottom: 20px;
+  letter-spacing: .02em;
+}
+.gratis-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.gratis-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.3);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--c-white);
+}
+.gratis-item span { font-size: 1.2rem; }
+
 /* ─── PRUEBA SOCIAL ─── */
 .prueba-social {
   padding: 96px 0;
