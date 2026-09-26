@@ -43,7 +43,6 @@ navToggle.addEventListener('click', () => {
   navToggle.classList.toggle('active');
 });
 
-// Close mobile nav on link click
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
@@ -101,6 +100,9 @@ if (form) {
       texto += `\n\n🎯 *Servicios:* No especificó (consultar)`;
     }
 
+    // Meta Pixel — Lead event
+    if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: tipoEvento });
+
     const url = `https://wa.me/5493512088004?text=${encodeURIComponent(texto)}`;
     window.open(url, '_blank');
 
@@ -110,7 +112,6 @@ if (form) {
 }
 
 // ─── LAZY VIDEO LOADING ───
-// Pause videos not in viewport to save mobile battery/data
 const videos = document.querySelectorAll('video');
 const videoObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -123,8 +124,12 @@ const videoObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 videos.forEach(v => {
-  // Don't observe hero video — always playing
   if (!v.closest('.hero-bg')) {
     videoObserver.observe(v);
   }
 });
+
+// ─── Meta Pixel — Contact event en botones WhatsApp directos ───
+document.querySelectorAll('a[href*="wa.me"]').forEach(a =>
+  a.addEventListener('click', () => { if (typeof fbq === 'function') fbq('track', 'Contact'); })
+);
